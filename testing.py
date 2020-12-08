@@ -13,12 +13,12 @@ if __name__ == '__main__':
     Initiating game play
     """
     for i in [True, False]:
-        for j in range(0,10000):
+        for j in range(0,600):
             cur_tim = time.time()
-            game = othello_testing.start_game(i, False, 2)
+            game = othello_testing.start_game(i, False, 4)
             game.play()
             end_time = time.time()
-            x = ",{},{},{},{},{}\n".format(i, j+1, 2, datetime.datetime.now(), end_time - cur_tim )
+            x = ",{},{},{},{},{}\n".format(i, j+1, 4, datetime.datetime.now(), end_time - cur_tim )
             with open("test_results.txt", "a") as f:
                 f.write(x)
     # DEBUG MAIN (END)

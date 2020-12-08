@@ -168,13 +168,13 @@ class Game:
             computer_skipped: bool = self.computer_move()
             self.actor_color: str = self.player_color
             if computer_skipped:
-                self.boardC.print_board()
+                # self.boardC.print_board()
                 return True
         elif computer_skipped:
             player_skipped: bool = self.player_move()
             self.actor_color: str = self.computer_color
             if player_skipped:
-                self.boardC.print_board()
+                # self.boardC.print_board()
                 return True
         return False
 
@@ -193,7 +193,7 @@ class Game:
             self.set_possible()
 
         print("Turn {}: Your move!".format(len(self.game_history) + 1))
-        self.boardC.print_board()
+        # self.boardC.print_board()
         random.seed(random.randint(0, 1001))
         random_move = random.randint(0, len(self.valid_moves) - 1)  # TODO this will change, implement AI
         self.boardC.set_board(self.valid_moves[random_move], self.player_color, self.valid_moves, self.game_history, self.actor_color)  # TODO this will change, implement AI
@@ -240,7 +240,7 @@ class Game:
             print("No valid move computer turn skipped!")
             return True
         print("Turn {}: Computer is playing...".format(len(self.game_history) + 1))
-        self.boardC.print_board()
+        # self.boardC.print_board()
 
         self.boardC.set_board(
             minimax.minimax_move(self.boardC, self.difficulty, self.player_color, self.computer_color),
@@ -280,7 +280,6 @@ class Game:
             result = self.turn(False, False)
             if result:
                 self.boardC.check_win_conditions(self.player_color, self.computer_color, True)
-                self.print_history()
                 break
         return 0
 
