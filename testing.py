@@ -13,7 +13,7 @@ if __name__ == '__main__':
     Initiating game play
     """
     for i in [True, False]:
-        for j in range(0,600):
+        for j in range(0,250):
             cur_tim = time.time()
             game = othello_testing.start_game(i, False, 4)
             game.play()
