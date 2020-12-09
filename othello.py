@@ -5,6 +5,7 @@ othello file including gameplay handling
 from typing import Tuple
 import minimax
 import board
+import viz
 
 # STATICS
 ROWS: int = 8
@@ -105,6 +106,7 @@ class Game:
         self.valid_moves: list = []
         self.show_possible_moves: bool = show_possible_moves
         self.difficulty: int = difficulty
+        self.graphic: viz.Viz = viz.Viz()
 
     # Set colors based on who is playing first
     def set_colors(self, player_first: bool):
@@ -167,13 +169,11 @@ class Game:
             computer_skipped: bool = self.computer_move()
             self.actor_color: str = self.player_color
             if computer_skipped:
-                self.boardC.print_board()
                 return True
         elif computer_skipped:
             player_skipped: bool = self.player_move()
             self.actor_color: str = self.computer_color
             if player_skipped:
-                self.boardC.print_board()
                 return True
         return False
 
@@ -192,7 +192,7 @@ class Game:
             self.set_possible()
 
         print("Turn {}: Your move!".format(len(self.game_history) + 1))
-        self.boardC.print_board()
+        self.graphic.update_output(self.boardC.board)
         self.handle_player_input(input("Choose and action (move XY or history): "))
         return False
 
@@ -237,7 +237,7 @@ class Game:
             print("No valid move computer turn skipped!")
             return True
         print("Turn {}: Computer is playing...".format(len(self.game_history) + 1))
-        self.boardC.print_board()
+        self.graphic.update_output(self.boardC.board)
 
         self.boardC.set_board(
             minimax.minimax_move(self.boardC, self.difficulty, self.player_color, self.computer_color),
