@@ -424,7 +424,7 @@ class Board:
                 print("Victory! Player wins with score {} over Computer's score {} !".format(player_score,
                                                                                              computer_score))
                 x = "Victory,{},{}".format(player_score, computer_score)
-                with open("test_results.txt", "a") as f:
+                with open("test_results2.txt", "a") as f:
                     f.write(x)
                 return 'p'
             elif player_score < computer_score:
@@ -432,28 +432,28 @@ class Board:
                     "Defeat! Computer wins with score {} over Player's score {} !".format(computer_score,
                                                                                           player_score))
                 x = "Defeat,{},{}".format(player_score, computer_score)
-                with open("test_results.txt", "a") as f:
+                with open("test_results2.txt", "a") as f:
                     f.write(x)
                 return 'c'
             elif player_score == computer_score:
                 print("Draw! Player and Computer have equal score {} - {} !".format(player_score,
                                                                                     computer_score))
                 x = "Draw,{},{}".format(player_score, computer_score)
-                with open("test_results.txt", "a") as f:
+                with open("test_results2.txt", "a") as f:
                     f.write(x)
                 return '-'
             elif player_score == 0:
                 print("Defeat! Computer wins with score {} over Player's score {} !".format(64,
                                                                                             player_score))
                 x = "Defeat,{},{}".format(player_score, computer_score)
-                with open("test_results.txt", "a") as f:
+                with open("test_results2.txt", "a") as f:
                     f.write(x)
                 return 'c'
             elif computer_score == 0:
                 print("Victory! Player wins with score {} over Computer's score {} !".format(64,
                                                                                              computer_score))
                 x = "Victory,{},{}".format(player_score, computer_score)
-                with open("test_results.txt", "a") as f:
+                with open("test_results2.txt", "a") as f:
                     f.write(x)
                 return 'p'
         else:

@@ -11,6 +11,8 @@ ROWS: int = 8
 COLUMNS: int = 8
 col_enumerator: Tuple[str, str, str, str, str, str, str, str] = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')
 row_enumerator: Tuple[str, str, str, str, str, str, str, str] = ('1', '2', '3', '4', '5', '6', '7', '8')
+
+
 # STATICS (END)
 
 
@@ -49,6 +51,7 @@ class Board:
     :var self.last_move: The latest move played
     :type self.last_move: tuple
     """
+
     def __init__(self, board: list = '', last_move: tuple = ''):
         """
         __init__ function
@@ -98,6 +101,7 @@ class Board:
         :return: The move and the game history
         :rtype: tuple
         """
+
         def move_exists():
             """
             Helper function which checks if a move is a valid move passed as an argument
@@ -133,6 +137,7 @@ class Board:
         :return: Nothing
         :rtype: N/A
         """
+
         def print_header():
             """
             Helper function to print the headers
@@ -424,7 +429,7 @@ class Board:
                 print("Victory! Player wins with score {} over Computer's score {} !".format(player_score,
                                                                                              computer_score))
                 x = "Victory,{},{}".format(player_score, computer_score)
-                with open("test_results.txt", "a") as f:
+                with open("test_results3.txt", "a") as f:
                     f.write(x)
                 return 'p'
             elif player_score < computer_score:
@@ -432,28 +437,28 @@ class Board:
                     "Defeat! Computer wins with score {} over Player's score {} !".format(computer_score,
                                                                                           player_score))
                 x = "Defeat,{},{}".format(player_score, computer_score)
-                with open("test_results.txt", "a") as f:
+                with open("test_results3.txt", "a") as f:
                     f.write(x)
                 return 'c'
             elif player_score == computer_score:
                 print("Draw! Player and Computer have equal score {} - {} !".format(player_score,
                                                                                     computer_score))
                 x = "Draw,{},{}".format(player_score, computer_score)
-                with open("test_results.txt", "a") as f:
+                with open("test_results3.txt", "a") as f:
                     f.write(x)
                 return '-'
             elif player_score == 0:
                 print("Defeat! Computer wins with score {} over Player's score {} !".format(64,
                                                                                             player_score))
                 x = "Defeat,{},{}".format(player_score, computer_score)
-                with open("test_results.txt", "a") as f:
+                with open("test_results3.txt", "a") as f:
                     f.write(x)
                 return 'c'
             elif computer_score == 0:
                 print("Victory! Player wins with score {} over Computer's score {} !".format(64,
                                                                                              computer_score))
                 x = "Victory,{},{}".format(player_score, computer_score)
-                with open("test_results.txt", "a") as f:
+                with open("test_results3.txt", "a") as f:
                     f.write(x)
                 return 'p'
         else:
@@ -517,9 +522,69 @@ class Board:
                         or (row == 7 and 1 < column < 6):
                     evaluation = 3
 
-                elif (column == 0 and row == 0) or (column == 7 and row ==7 ) or (column==0 and row == 7) or \
+                elif (column == 0 and row == 0) or (column == 7 and row == 7) or (column == 0 and row == 7) or \
                         (column == 0 and row == 7):
                     evaluation = 5
+
+                if self.board[row][column] == computer_color:
+                    board_value += evaluation
+                elif self.board[row][column] == player_color:
+                    board_value -= evaluation
+
+        # In case of game win add 100 to the winner value
+        if self.check_win_conditions(player_color, computer_color, False) == 'p':
+            board_value = board_value + (player_value * 1000)
+        elif self.check_win_conditions(player_color, computer_color, False) == 'c':
+            board_value = board_value + (computer_value * 1000)
+
+        return board_value
+
+    def evaluate_3(self, computer_color):
+        board_value: int = 0
+        computer_value: int = 1
+        player_value: int = -1
+
+        # Who is who
+        if computer_color == 'L':
+            player_color: str = 'D'
+        else:
+            player_color: str = 'L'
+
+        for row in range(0, ROWS):
+            for column in range(0, COLUMNS):
+                evaluation = 1
+
+                if (row == 0 and column == 1) or (row == 1 and 0 <= column <= 1):
+                    if self.board[0][0] == computer_color:
+                        evaluation = 5
+                    else:
+                        evaluation = -5
+
+                elif (row == 0 and column == 6) or (row == 1 and 6 <= column <= 7):
+                    if self.board[0][7] == computer_color:
+                        evaluation = 5
+                    else:
+                        evaluation = -5
+
+                elif (row == 7 and column == 1) or (row == 6 and 0 <= column <= 1):
+                    if self.board[7][0] == computer_color:
+                        evaluation = 5
+                    else:
+                        evaluation = -5
+
+                elif (row == 7 and column == 6) or (row == 6 and 6 <= column <= 7):
+                    if self.board[7][7] == computer_color:
+                        evaluation = 5
+                    else:
+                        evaluation = -5
+
+                elif (row == 0 and 1 < column < 6) or (row == 7 and 1 < column < 6) or (column == 0 and 1 < row < 6) or\
+                        (column == 7 and 1 < row < 6):
+                    evaluation = 5
+
+                elif (row == 0 and column == 0) or (row == 0 and column == 7) or (row == 7 and column == 0) or \
+                        (row == 7 and column == 7):
+                    evaluation = 25
 
                 if self.board[row][column] == computer_color:
                     board_value += evaluation

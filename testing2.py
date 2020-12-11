@@ -3,7 +3,7 @@
 exercise1 file including game start
 """
 # Importing needed modules
-import othello_testing
+import othello_testing2
 import datetime
 import time
 import argparse
@@ -15,10 +15,10 @@ if __name__ == '__main__':
     for i in [False]:
         for j in range(0,15):
             cur_tim = time.time()
-            game = othello_testing.start_game(i, False, 6)
+            game = othello_testing2.start_game(i, False, 6)
             game.play()
             end_time = time.time()
-            x = ",{},{},{},{},{},test1\n".format(i, j+1, 6, datetime.datetime.now(), end_time - cur_tim)
-            with open("test_results.txt", "a") as f:
+            x = ",{},{},{},{},{},test2\n".format(i, j+1, 6, datetime.datetime.now(), end_time - cur_tim )
+            with open("test_results2.txt", "a") as f:
                 f.write(x)
     # DEBUG MAIN (END)

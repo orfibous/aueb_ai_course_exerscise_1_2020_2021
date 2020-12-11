@@ -2,9 +2,10 @@
 othello file including gameplay handling
 """
 # Import needed modules
+import random
 from typing import Tuple
-import minimax
-import board
+import minimax2
+import board2
 
 # STATICS
 ROWS: int = 8
@@ -101,7 +102,7 @@ class Game:
         self.actor_color = None
         self.set_colors(player_first)
         self.game_history: list = []  # game history is saved as a list of
-        self.boardC: board.Board = board.Board()
+        self.boardC: board2.Board = board2.Board()
         self.valid_moves: list = []
         self.show_possible_moves: bool = show_possible_moves
         self.difficulty: int = difficulty
@@ -193,7 +194,9 @@ class Game:
 
         print("Turn {}: Your move!".format(len(self.game_history) + 1))
         # self.boardC.print_board()
-        self.handle_player_input(input("Choose and action (move XY or history): "))
+        random.seed(random.randint(0, 1001))
+        random_move = random.randint(0, len(self.valid_moves) - 1)  # TODO this will change, implement AI
+        self.boardC.set_board(self.valid_moves[random_move], self.player_color, self.valid_moves, self.game_history, self.actor_color)  # TODO this will change, implement AI
         return False
 
     def handle_player_input(self, player_input: str):
@@ -240,7 +243,7 @@ class Game:
         # self.boardC.print_board()
 
         self.boardC.set_board(
-            minimax.minimax_move(self.boardC, self.difficulty, self.player_color, self.computer_color),
+            minimax2.minimax_move(self.boardC, self.difficulty, self.player_color, self.computer_color),
             self.computer_color, self.valid_moves, self.game_history, self.actor_color)
         return False
 
@@ -277,7 +280,6 @@ class Game:
             result = self.turn(False, False)
             if result:
                 self.boardC.check_win_conditions(self.player_color, self.computer_color, True)
-                self.print_history()
                 break
         return 0
 
